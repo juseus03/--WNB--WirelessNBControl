@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Juan Useche\AndroidStudioProjects\BluetoothChat\Application\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="C:\Users\Juan Useche\AndroidStudioProjects\BluetoothChat\Application\build\intermediates\pre-dexed\debug\classes-280521a4045060cb98093d2cfc90bab69a157025.jar" />
+    </item>
+    <item
+        jar="C:\Users\Juan Useche\AndroidStudioProjects\BluetoothChat\Application\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\libs\internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="C:\Users\Juan Useche\AndroidStudioProjects\BluetoothChat\Application\build\intermediates\pre-dexed\debug\internal_impl-23.1.1-46f4e67c455fcea765476138e5bb83153ae3f935.jar" />
+    </item>
+    <item
+        jar="C:\Users\Juan Useche\AndroidStudioProjects\BluetoothChat\Application\build\intermediates\exploded-aar\com.android.support\gridlayout-v7\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8465fad6dd05b954b82bd5ff22edd80992808561">
+        <dex dex="C:\Users\Juan Useche\AndroidStudioProjects\BluetoothChat\Application\build\intermediates\pre-dexed\debug\classes-a44d113696902b37efc25c3d503c53272c79182e.jar" />
+    </item>
+    <item
+        jar="C:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.1\support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="C:\Users\Juan Useche\AndroidStudioProjects\BluetoothChat\Application\build\intermediates\pre-dexed\debug\support-annotations-23.1.1-6ededcc9b39f46fbcdd6efbd1a4d51bb6afd2a15.jar" />
+    </item>
+    <item
+        jar="C:\Users\Juan Useche\AndroidStudioProjects\BluetoothChat\Application\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
+        <dex dex="C:\Users\Juan Useche\AndroidStudioProjects\BluetoothChat\Application\build\intermediates\pre-dexed\debug\classes-f3d6fb25b87995e6dc84e060a10d091673aab6de.jar" />
+    </item>
+
+</items>
