@@ -58,7 +58,7 @@ public class BluetoothChatFragment extends Fragment {
 
     // Layout Views
     private ListView mConversationView;
-   // private EditText mOutEditText;
+    private EditText mOutEditText;
     private Button mSendButton;
 
     /**
@@ -171,8 +171,9 @@ public class BluetoothChatFragment extends Fragment {
         //mSendButton.setOnClickListener(new View.OnClickListener() {
           //  public void onClick(View v) {
                 // Send a message using content of the edit text widget
-            //    View view = getView();
-              //  jugar(view);
+            //  jugar(view);
+            //}
+        //});
                /*
                 if (null != view) {
                     TextView textView = (TextView) view.findViewById(R.id.edit_text_out);
@@ -205,18 +206,38 @@ public class BluetoothChatFragment extends Fragment {
     /**
      * Sends a message.
      *
-     * @param view A string of text to send.
+     *
      *
      */
-    private void jugar(View view) {
+     public boolean jugar() {
         // Check that we're actually connected before trying anything
+         boolean start=true;
         if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
             Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
-            return;
+            start=false;
         }
+         else{
+            int size=mConversationArrayAdapter.getCount();
+            String message;
+            if(size>0){
+                 message=mConversationArrayAdapter.getItem(size-1);
+            }
+            else{
+               message=mConversationArrayAdapter.getItem(0);
+            }
+
+            byte[] send = message.getBytes();
+            mChatService.write(send);
+            // Reset out string buffer to zero and clear the edit text field
+            mOutStringBuffer.setLength(0);
+         }
+         return start;
+
 
 
     }
+
+
 
     /**
      * The action listener for the EditText widget, to listen for the return key
@@ -294,13 +315,14 @@ public class BluetoothChatFragment extends Fragment {
                     byte[] writeBuf = (byte[]) msg.obj;
                     // construct a string from the buffer
                     String writeMessage = new String(writeBuf);
-                    mConversationArrayAdapter.add("Me:  " + writeMessage);
+                    mConversationArrayAdapter.add("Me: " + writeMessage);
                     break;
                 case Constants.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
+
+                    mConversationArrayAdapter.add(/*mConnectedDeviceName + ":  " +*/ readMessage);
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name

@@ -27,8 +27,10 @@ import android.os.Message;
 
 import com.example.android.common.logger.Log;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.UUID;
 
@@ -252,6 +254,8 @@ public class BluetoothChatService {
         r.write(out);
     }
 
+
+
     /**
      * Indicate that the connection attempt failed and notify the UI Activity.
      */
@@ -281,6 +285,7 @@ public class BluetoothChatService {
         // Start the service over to restart listening mode
         BluetoothChatService.this.start();
     }
+
 
     /**
      * This thread runs while listening for incoming connections. It behaves
@@ -470,13 +475,14 @@ public class BluetoothChatService {
         public void run() {
             Log.i(TAG, "BEGIN mConnectedThread");
             byte[] buffer = new byte[1024];
-            int bytes;
+            int bytes=0;
 
             // Keep listening to the InputStream while connected
             while (true) {
                 try {
                     // Read from the InputStream
-                    bytes = mmInStream.read(buffer);
+                    bytes += mmInStream.read(buffer);
+
 
                     // Send the obtained bytes to the UI Activity
                     mHandler.obtainMessage(Constants.MESSAGE_READ, bytes, -1, buffer)
@@ -507,6 +513,8 @@ public class BluetoothChatService {
                 Log.e(TAG, "Exception during write", e);
             }
         }
+
+
 
         public void cancel() {
             try {

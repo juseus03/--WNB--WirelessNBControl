@@ -44,6 +44,7 @@ public class MainActivity extends SampleActivityBase {
 
     // Whether the Log Fragment is currently shown
     private boolean mLogShown;
+    private  BluetoothChatFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class MainActivity extends SampleActivityBase {
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            BluetoothChatFragment fragment = new BluetoothChatFragment();
+            fragment = new BluetoothChatFragment();
             transaction.replace(R.id.sample_content_fragment, fragment);
             transaction.commit();
         }
@@ -112,6 +113,12 @@ public class MainActivity extends SampleActivityBase {
     }
     public void jugar(View view){
         Intent intent=new Intent(this,IniciarJuegoActividad.class);
-        startActivity(intent);
+        boolean puede_jugar=fragment.jugar();
+        if(puede_jugar){
+            startActivity(intent);
+
+
+        }
+
     }
 }
