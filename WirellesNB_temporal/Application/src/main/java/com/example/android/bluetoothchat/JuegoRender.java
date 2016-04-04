@@ -6,10 +6,6 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
-import com.example.android.common.RawResourceReader;
-import com.example.android.common.ShaderHelper;
-import com.example.android.common.TextureHelper;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -112,7 +108,13 @@ public class JuegoRender implements GLSurfaceView.Renderer {
     private int mPointProgramHandle;
 
     /** This is a handle to our texture data. */
-    private int mTextureDataHandle;
+    private int mTextureDataHandleSVPP_WHITE_1;
+    /** This is a handle the second texture. */
+    private int mTextureDataHandleSVPP_BLACK_1;
+    /** This is a handle to our texture data. */
+    private int mTextureDataHandleSVPP_WHITE_2;
+    /** This is a handle the second texture. */
+    private int mTextureDataHandleSVPP_BLACK_2;
 
     /**
      * Initialize the model data.
@@ -137,99 +139,20 @@ public class JuegoRender implements GLSurfaceView.Renderer {
                         1.0f, 1.0f, 1.0f,
                         -1.0f, -1.0f, 1.0f,
                         1.0f, -1.0f, 1.0f,
-                        1.0f, 1.0f, 1.0f,
+                        1.0f, 1.0f, 1.0f
 
-                        // Right face
-                        1.0f, 1.0f, 1.0f,
-                        1.0f, -1.0f, 1.0f,
-                        1.0f, 1.0f, -1.0f,
-                        1.0f, -1.0f, 1.0f,
-                        1.0f, -1.0f, -1.0f,
-                        1.0f, 1.0f, -1.0f,
-
-                        // Back face
-                        1.0f, 1.0f, -1.0f,
-                        1.0f, -1.0f, -1.0f,
-                        -1.0f, 1.0f, -1.0f,
-                        1.0f, -1.0f, -1.0f,
-                        -1.0f, -1.0f, -1.0f,
-                        -1.0f, 1.0f, -1.0f,
-
-                        // Left face
-                        -1.0f, 1.0f, -1.0f,
-                        -1.0f, -1.0f, -1.0f,
-                        -1.0f, 1.0f, 1.0f,
-                        -1.0f, -1.0f, -1.0f,
-                        -1.0f, -1.0f, 1.0f,
-                        -1.0f, 1.0f, 1.0f,
-
-                        // Top face
-                        -1.0f, 1.0f, -1.0f,
-                        -1.0f, 1.0f, 1.0f,
-                        1.0f, 1.0f, -1.0f,
-                        -1.0f, 1.0f, 1.0f,
-                        1.0f, 1.0f, 1.0f,
-                        1.0f, 1.0f, -1.0f,
-
-                        // Bottom face
-                        1.0f, -1.0f, -1.0f,
-                        1.0f, -1.0f, 1.0f,
-                        -1.0f, -1.0f, -1.0f,
-                        1.0f, -1.0f, 1.0f,
-                        -1.0f, -1.0f, 1.0f,
-                        -1.0f, -1.0f, -1.0f,
                 };
 
         // R, G, B, A
         final float[] cubeColorData =
                 {
-                        // Front face (red)
-                        1.0f, 0.0f, 0.0f, 1.0f,
-                        1.0f, 0.0f, 0.0f, 1.0f,
-                        1.0f, 0.0f, 0.0f, 1.0f,
-                        1.0f, 0.0f, 0.0f, 1.0f,
-                        1.0f, 0.0f, 0.0f, 1.0f,
-                        1.0f, 0.0f, 0.0f, 1.0f,
-
-                        // Right face (green)
-                        0.0f, 1.0f, 0.0f, 1.0f,
-                        0.0f, 1.0f, 0.0f, 1.0f,
-                        0.0f, 1.0f, 0.0f, 1.0f,
-                        0.0f, 1.0f, 0.0f, 1.0f,
-                        0.0f, 1.0f, 0.0f, 1.0f,
-                        0.0f, 1.0f, 0.0f, 1.0f,
-
-                        // Back face (blue)
-                        0.0f, 0.0f, 1.0f, 1.0f,
-                        0.0f, 0.0f, 1.0f, 1.0f,
-                        0.0f, 0.0f, 1.0f, 1.0f,
-                        0.0f, 0.0f, 1.0f, 1.0f,
-                        0.0f, 0.0f, 1.0f, 1.0f,
-                        0.0f, 0.0f, 1.0f, 1.0f,
-
-                        // Left face (yellow)
-                        1.0f, 1.0f, 0.0f, 1.0f,
-                        1.0f, 1.0f, 0.0f, 1.0f,
-                        1.0f, 1.0f, 0.0f, 1.0f,
-                        1.0f, 1.0f, 0.0f, 1.0f,
-                        1.0f, 1.0f, 0.0f, 1.0f,
-                        1.0f, 1.0f, 0.0f, 1.0f,
-
-                        // Top face (cyan)
-                        0.0f, 1.0f, 1.0f, 1.0f,
-                        0.0f, 1.0f, 1.0f, 1.0f,
-                        0.0f, 1.0f, 1.0f, 1.0f,
-                        0.0f, 1.0f, 1.0f, 1.0f,
-                        0.0f, 1.0f, 1.0f, 1.0f,
-                        0.0f, 1.0f, 1.0f, 1.0f,
-
-                        // Bottom face (magenta)
-                        1.0f, 0.0f, 1.0f, 1.0f,
-                        1.0f, 0.0f, 1.0f, 1.0f,
-                        1.0f, 0.0f, 1.0f, 1.0f,
-                        1.0f, 0.0f, 1.0f, 1.0f,
-                        1.0f, 0.0f, 1.0f, 1.0f,
-                        1.0f, 0.0f, 1.0f, 1.0f
+                        // Front face (white)
+                        1.0f, 1.0f, 1.0f, 1.0f,
+                        1.0f, 1.0f, 1.0f, 1.0f,
+                        1.0f, 1.0f, 1.0f, 1.0f,
+                        1.0f, 1.0f, 1.0f, 1.0f,
+                        1.0f, 1.0f, 1.0f, 1.0f,
+                        1.0f, 1.0f, 1.0f, 1.0f
                 };
 
         // X, Y, Z
@@ -244,47 +167,8 @@ public class JuegoRender implements GLSurfaceView.Renderer {
                         0.0f, 0.0f, 1.0f,
                         0.0f, 0.0f, 1.0f,
                         0.0f, 0.0f, 1.0f,
-                        0.0f, 0.0f, 1.0f,
+                        0.0f, 0.0f, 1.0f
 
-                        // Right face
-                        1.0f, 0.0f, 0.0f,
-                        1.0f, 0.0f, 0.0f,
-                        1.0f, 0.0f, 0.0f,
-                        1.0f, 0.0f, 0.0f,
-                        1.0f, 0.0f, 0.0f,
-                        1.0f, 0.0f, 0.0f,
-
-                        // Back face
-                        0.0f, 0.0f, -1.0f,
-                        0.0f, 0.0f, -1.0f,
-                        0.0f, 0.0f, -1.0f,
-                        0.0f, 0.0f, -1.0f,
-                        0.0f, 0.0f, -1.0f,
-                        0.0f, 0.0f, -1.0f,
-
-                        // Left face
-                        -1.0f, 0.0f, 0.0f,
-                        -1.0f, 0.0f, 0.0f,
-                        -1.0f, 0.0f, 0.0f,
-                        -1.0f, 0.0f, 0.0f,
-                        -1.0f, 0.0f, 0.0f,
-                        -1.0f, 0.0f, 0.0f,
-
-                        // Top face
-                        0.0f, 1.0f, 0.0f,
-                        0.0f, 1.0f, 0.0f,
-                        0.0f, 1.0f, 0.0f,
-                        0.0f, 1.0f, 0.0f,
-                        0.0f, 1.0f, 0.0f,
-                        0.0f, 1.0f, 0.0f,
-
-                        // Bottom face
-                        0.0f, -1.0f, 0.0f,
-                        0.0f, -1.0f, 0.0f,
-                        0.0f, -1.0f, 0.0f,
-                        0.0f, -1.0f, 0.0f,
-                        0.0f, -1.0f, 0.0f,
-                        0.0f, -1.0f, 0.0f
                 };
 
         // S, T (or X, Y)
@@ -301,46 +185,6 @@ public class JuegoRender implements GLSurfaceView.Renderer {
                         0.0f, 1.0f,
                         1.0f, 1.0f,
                         1.0f, 0.0f,
-
-                        // Right face
-                        0.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 1.0f,
-                        1.0f, 0.0f,
-
-                        // Back face
-                        0.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 1.0f,
-                        1.0f, 0.0f,
-
-                        // Left face
-                        0.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 1.0f,
-                        1.0f, 0.0f,
-
-                        // Top face
-                        0.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 1.0f,
-                        1.0f, 0.0f,
-
-                        // Bottom face
-                        0.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 1.0f,
-                        1.0f, 0.0f
                 };
 
         // Initialize the buffers.
@@ -363,19 +207,19 @@ public class JuegoRender implements GLSurfaceView.Renderer {
 
     protected String getVertexShader()
     {
-        return RawResourceReader.readTextFileFromRawResource(mActivityContext, R.raw.per_pixel_vertex_shader);
+        return RawResourceReader.readTextFileFromRawResource(mActivityContext, R.raw.texture_per_pixel_vertex_shader);
     }
 
     protected String getFragmentShader()
     {
-        return RawResourceReader.readTextFileFromRawResource(mActivityContext, R.raw.per_pixel_fragment_shader);
+        return RawResourceReader.readTextFileFromRawResource(mActivityContext, R.raw.texture_per_pixel_fragment_shader);
     }
 
     @Override
     public void onSurfaceCreated(GL10 glUnused, EGLConfig config)
     {
         // Set the background clear color to black.
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        GLES20.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 
         // Use culling to remove back faces.
         GLES20.glEnable(GLES20.GL_CULL_FACE);
@@ -426,7 +270,11 @@ public class JuegoRender implements GLSurfaceView.Renderer {
                 new String[] {"a_Position"});
 
         // Load the texture
-        mTextureDataHandle = TextureHelper.loadTexture(mActivityContext, R.drawable.bumpy_bricks_public_domain);
+        mTextureDataHandleSVPP_WHITE_1 = TextureHelper.loadTexture(mActivityContext, R.drawable.ssvepcircularblanco);
+        mTextureDataHandleSVPP_BLACK_1 = TextureHelper.loadTexture(mActivityContext, R.drawable.ssvepcircularnegro);
+        mTextureDataHandleSVPP_WHITE_2 = TextureHelper.loadTexture(mActivityContext, R.drawable.ssvepcircularblanco2);
+        mTextureDataHandleSVPP_BLACK_2 = TextureHelper.loadTexture(mActivityContext, R.drawable.ssvepcircularnegro2);
+
     }
 
     @Override
@@ -434,7 +282,6 @@ public class JuegoRender implements GLSurfaceView.Renderer {
     {
         // Set the OpenGL viewport to the same size as the surface.
         GLES20.glViewport(0, 0, width, height);
-
         // Create a new perspective projection matrix. The height will stay the same
         // while the width will vary as per aspect ratio.
         final float ratio = (float) width / height;
@@ -444,7 +291,6 @@ public class JuegoRender implements GLSurfaceView.Renderer {
         final float top = 1.0f;
         final float near = 1.0f;
         final float far = 10.0f;
-
         Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, near, far);
     }
 
@@ -454,9 +300,12 @@ public class JuegoRender implements GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         // Do a complete rotation every 10 seconds.
-        long time = SystemClock.uptimeMillis() % 10000L;
-        float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
+        long time1 = SystemClock.uptimeMillis() % 100L;
+        float flick_time1 = (1.0f/100.0f) * ((int) time1);
+        long time2 = SystemClock.uptimeMillis() % 120L;
+        float flick_time2 = (1.0f/120.0f) * ((int) time2);
 
+        changeTexture1(flick_time1);
         // Set our per-vertex lighting program.
         GLES20.glUseProgram(mProgramHandle);
 
@@ -474,7 +323,7 @@ public class JuegoRender implements GLSurfaceView.Renderer {
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
 
         // Bind the texture to this unit.
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle);
+        //GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle);
 
         // Tell the texture uniform sampler to use this texture in the shader by binding to texture unit 0.
         GLES20.glUniform1i(mTextureUniformHandle, 0);
@@ -482,36 +331,22 @@ public class JuegoRender implements GLSurfaceView.Renderer {
         // Calculate position of the light. Rotate and then push into the distance.
         Matrix.setIdentityM(mLightModelMatrix, 0);
         Matrix.translateM(mLightModelMatrix, 0, 0.0f, 0.0f, -5.0f);
-        Matrix.rotateM(mLightModelMatrix, 0, angleInDegrees, 0.0f, 1.0f, 0.0f);
+        Matrix.rotateM(mLightModelMatrix, 0, 0.0f, 0.0f, 1.0f, 0.0f);
         Matrix.translateM(mLightModelMatrix, 0, 0.0f, 0.0f, 2.0f);
 
         Matrix.multiplyMV(mLightPosInWorldSpace, 0, mLightModelMatrix, 0, mLightPosInModelSpace, 0);
         Matrix.multiplyMV(mLightPosInEyeSpace, 0, mViewMatrix, 0, mLightPosInWorldSpace, 0);
 
-        // Draw some cubes.
-        Matrix.setIdentityM(mModelMatrix, 0);
-        Matrix.translateM(mModelMatrix, 0, 4.0f, 0.0f, -7.0f);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 0.0f, 0.0f);
-        drawCube();
 
         Matrix.setIdentityM(mModelMatrix, 0);
-        Matrix.translateM(mModelMatrix, 0, -4.0f, 0.0f, -7.0f);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 1.0f, 0.0f);
-        drawCube();
-
+        Matrix.translateM(mModelMatrix, 0, 1.1f, -2.0f, -5.0f);
+        Matrix.rotateM(mModelMatrix, 0, 0.0f, 1.0f, 1.0f, 0.0f);
+        drawSquare();
+        changeTexture2(flick_time2);
         Matrix.setIdentityM(mModelMatrix, 0);
-        Matrix.translateM(mModelMatrix, 0, 0.0f, 4.0f, -7.0f);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 0.0f, 1.0f);
-        drawCube();
-
-        Matrix.setIdentityM(mModelMatrix, 0);
-        Matrix.translateM(mModelMatrix, 0, 0.0f, -4.0f, -7.0f);
-        drawCube();
-
-        Matrix.setIdentityM(mModelMatrix, 0);
-        Matrix.translateM(mModelMatrix, 0, 0.0f, 0.0f, -5.0f);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);
-        drawCube();
+        Matrix.translateM(mModelMatrix, 0, -1.1f, -2.0f, -5.0f);
+        Matrix.rotateM(mModelMatrix, 0, 0.0f, 1.0f, 1.0f, 0.0f);
+        drawSquare();
 
         // Draw a point to indicate the light.
         GLES20.glUseProgram(mPointProgramHandle);
@@ -519,9 +354,34 @@ public class JuegoRender implements GLSurfaceView.Renderer {
     }
 
     /**
+     * Changes the information in the texture handle deppending on the value of time
+     * @param time: Time in ms passed from the last draw of the frame
+     */
+    private void changeTexture1(float time) {
+
+        if(time>0.5){
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandleSVPP_BLACK_1);
+
+        }
+        else{
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandleSVPP_WHITE_1);
+        }
+    }
+    private void changeTexture2(float time) {
+
+        if(time>0.5){
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandleSVPP_BLACK_2);
+
+        }
+        else{
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandleSVPP_WHITE_2);
+        }
+    }
+
+    /**
      * Draws a cube.
      */
-    private void drawCube()
+    private void drawSquare()
     {
         // Pass in the position information
         mCubePositions.position(0);
@@ -569,7 +429,7 @@ public class JuegoRender implements GLSurfaceView.Renderer {
         GLES20.glUniform3f(mLightPosHandle, mLightPosInEyeSpace[0], mLightPosInEyeSpace[1], mLightPosInEyeSpace[2]);
 
         // Draw the cube.
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 36);
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
     }
 
     /**
@@ -594,7 +454,4 @@ public class JuegoRender implements GLSurfaceView.Renderer {
         // Draw the point.
         GLES20.glDrawArrays(GLES20.GL_POINTS, 0, 1);
     }
-
-
-
 }

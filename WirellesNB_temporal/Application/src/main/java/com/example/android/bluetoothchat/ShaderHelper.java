@@ -1,11 +1,10 @@
-package com.example.android.common;
+package com.example.android.bluetoothchat;
 
 import android.opengl.GLES20;
-
-import com.example.android.common.logger.Log;
+import android.util.Log;
 
 /**
- * Created by Juan Useche on 15/03/2016.
+ * Created by Juan Useche on 26/03/2016.
  */
 public class ShaderHelper {
     private static final String TAG = "ShaderHelper";

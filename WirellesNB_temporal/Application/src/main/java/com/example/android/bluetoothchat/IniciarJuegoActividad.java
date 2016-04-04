@@ -11,9 +11,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 public class IniciarJuegoActividad extends Activity {
-    /** Hold a reference to our GLSurfaceView */
     private GLSurfaceView mGLSurfaceView;
-    boolean rendererSet;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -21,6 +19,11 @@ public class IniciarJuegoActividad extends Activity {
         super.onCreate(savedInstanceState);
 
         mGLSurfaceView = new GLSurfaceView(this);
+
+        //Makes FullScreen activity
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         // Check if the system supports OpenGL ES 2.0.
         final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -33,8 +36,8 @@ public class IniciarJuegoActividad extends Activity {
             mGLSurfaceView.setEGLContextClientVersion(2);
 
             // Set the renderer to our demo renderer, defined below.
-            mGLSurfaceView.setRenderer(new JuegoRender());
-            rendererSet = true;
+            mGLSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0); //Makes the emulator to work, not necessary if install is made directly in a phone
+            mGLSurfaceView.setRenderer(new JuegoRender(this));
         }
         else
         {
@@ -42,10 +45,7 @@ public class IniciarJuegoActividad extends Activity {
             // renderer if you wanted to support both ES 1 and ES 2.
             return;
         }
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(mGLSurfaceView);
     }
 

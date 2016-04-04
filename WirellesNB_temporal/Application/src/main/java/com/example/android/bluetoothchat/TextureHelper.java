@@ -1,4 +1,4 @@
-package com.example.android.common;
+package com.example.android.bluetoothchat;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,10 +7,9 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 
 /**
- * Created by Juan Useche on 15/03/2016.
+ * Created by Juan Useche on 26/03/2016.
  */
 public class TextureHelper {
-
     public static int loadTexture(final Context context, final int resourceId)
     {
         final int[] textureHandle = new int[1];

@@ -55,7 +55,7 @@
             android:name="com.example.android.bluetoothchat.IniciarJuegoActividad"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_iniciar_juego_actividad"
-            android:screenOrientation="landscape"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
     </application>
 

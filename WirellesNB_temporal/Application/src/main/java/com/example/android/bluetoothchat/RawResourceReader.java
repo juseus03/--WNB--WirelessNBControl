@@ -1,4 +1,4 @@
-package com.example.android.common;
+package com.example.android.bluetoothchat;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * Created by Juan Useche on 15/03/2016.
+ * Created by Juan Useche on 26/03/2016.
  */
 public class RawResourceReader {
     public static String readTextFileFromRawResource(final Context context,
