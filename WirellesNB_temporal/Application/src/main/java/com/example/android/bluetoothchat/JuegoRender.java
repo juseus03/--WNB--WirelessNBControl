@@ -115,7 +115,10 @@ public class JuegoRender implements GLSurfaceView.Renderer {
     private int mTextureDataHandleSVPP_WHITE_2;
     /** This is a handle the second texture. */
     private int mTextureDataHandleSVPP_BLACK_2;
-
+    private int mTextureDataHandleOP1;
+    /** This is a handle the second texture. */
+    private int mTextureDataHandleOP2;
+    private int mTextureDataHandleOP3;
     /**
      * Initialize the model data.
      */
@@ -275,6 +278,10 @@ public class JuegoRender implements GLSurfaceView.Renderer {
         mTextureDataHandleSVPP_WHITE_2 = TextureHelper.loadTexture(mActivityContext, R.drawable.ssvepcircularblanco2);
         mTextureDataHandleSVPP_BLACK_2 = TextureHelper.loadTexture(mActivityContext, R.drawable.ssvepcircularnegro2);
 
+        mTextureDataHandleOP1=TextureHelper.loadTexture(mActivityContext, R.drawable.numero_3);
+        mTextureDataHandleOP2=TextureHelper.loadTexture(mActivityContext, R.drawable.numero_mas);
+        mTextureDataHandleOP3=TextureHelper.loadTexture(mActivityContext, R.drawable.numero_2);
+
     }
 
     @Override
@@ -305,7 +312,7 @@ public class JuegoRender implements GLSurfaceView.Renderer {
         long time2 = SystemClock.uptimeMillis() % 120L;
         float flick_time2 = (1.0f/120.0f) * ((int) time2);
 
-        changeTexture1(flick_time1);
+
         // Set our per-vertex lighting program.
         GLES20.glUseProgram(mProgramHandle);
 
@@ -337,7 +344,27 @@ public class JuegoRender implements GLSurfaceView.Renderer {
         Matrix.multiplyMV(mLightPosInWorldSpace, 0, mLightModelMatrix, 0, mLightPosInModelSpace, 0);
         Matrix.multiplyMV(mLightPosInEyeSpace, 0, mViewMatrix, 0, mLightPosInWorldSpace, 0);
 
+        //Set the first number in the operator
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandleOP1);
+        Matrix.setIdentityM(mModelMatrix, 0);
+        Matrix.translateM(mModelMatrix, 0, -1.5f, 1.0f, -5.0f);
+        Matrix.rotateM(mModelMatrix, 0, 0.0f, 1.0f, 1.0f, 0.0f);
+        drawSquare();
+        //Set the plus sign in the operation
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandleOP2);
+        Matrix.setIdentityM(mModelMatrix, 0);
+        Matrix.translateM(mModelMatrix, 0, 0.0f, 1.0f, -5.0f);
+        Matrix.rotateM(mModelMatrix, 0, 0.0f, 1.0f, 1.0f, 0.0f);
+        drawSquare();
+        //Set the second number in the operation
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandleOP3);
+        Matrix.setIdentityM(mModelMatrix, 0);
+        Matrix.translateM(mModelMatrix, 0, 1.5f, 1.0f, -5.0f);
+        Matrix.rotateM(mModelMatrix, 0, 0.0f, 1.0f, 1.0f, 0.0f);
+        drawSquare();
 
+        //Set the images for the ssvep
+        changeTexture1(flick_time1);
         Matrix.setIdentityM(mModelMatrix, 0);
         Matrix.translateM(mModelMatrix, 0, 1.1f, -2.0f, -5.0f);
         Matrix.rotateM(mModelMatrix, 0, 0.0f, 1.0f, 1.0f, 0.0f);
