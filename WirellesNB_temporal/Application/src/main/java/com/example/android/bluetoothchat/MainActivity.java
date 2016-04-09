@@ -31,6 +31,8 @@ import com.example.android.common.logger.LogFragment;
 import com.example.android.common.logger.LogWrapper;
 import com.example.android.common.logger.MessageOnlyLogFilter;
 
+import java.io.Serializable;
+
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
  * {@link android.support.v4.app.Fragment} which can display a view.
@@ -113,12 +115,9 @@ public class MainActivity extends SampleActivityBase {
     }
     public void jugar(View view){
         Intent intent=new Intent(this,IniciarJuegoActividad.class);
+
         boolean puede_jugar=fragment.jugar();
-        if(puede_jugar){
-            startActivity(intent);
-
-
-        }
-
+        if(puede_jugar)
+          startActivity(intent);
     }
 }

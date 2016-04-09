@@ -217,25 +217,11 @@ public class BluetoothChatFragment extends Fragment {
             start=false;
         }
          else{
-            int size=mConversationArrayAdapter.getCount();
-            String message;
-            if(size>0){
-                 message=mConversationArrayAdapter.getItem(size-1);
-            }
-            else{
-               message=mConversationArrayAdapter.getItem(0);
-            }
-
-            byte[] send = message.getBytes();
-            mChatService.write(send);
-            // Reset out string buffer to zero and clear the edit text field
-            mOutStringBuffer.setLength(0);
+           start=true;
          }
          return start;
-
-
-
     }
+
 
 
 
@@ -321,7 +307,6 @@ public class BluetoothChatFragment extends Fragment {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-
                     mConversationArrayAdapter.add(/*mConnectedDeviceName + ":  " +*/ readMessage);
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
